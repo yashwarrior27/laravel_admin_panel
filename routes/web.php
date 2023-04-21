@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FaqController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,10 +23,8 @@ Auth::routes();
 
 Route::group(['middleware'=>'auth'],function () {
 
-    Route::get('/',function(){
-       return view('admin.pages.dashboard.index');
-    });
-
+  Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+  Route::resource('/faqs',FaqController::class);
 });
 
 Route::get('/clear-cache', function () {
