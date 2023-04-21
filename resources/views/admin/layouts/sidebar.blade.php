@@ -68,10 +68,16 @@
 
     <ul class="menu-inner py-1">
       <!-- Dashboard -->
-      <li class="menu-item active">
-        <a href="index.html" class="menu-link">
+      <li class="menu-item  {{ request()->segment(1)=='dashboard' ?'active': '' }}">
+        <a href="{{url("dashboard")}}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-home-circle"></i>
           <div data-i18n="Analytics">Dashboard</div>
+        </a>
+      </li>
+      <li class="menu-item  {{ request()->segment(1)=='faqs' ?'active': '' }}">
+        <a href="{{route('faqs.index')}}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-home-circle"></i>
+          <div data-i18n="Analytics">Faqs</div>
         </a>
       </li>
 
@@ -98,16 +104,6 @@
               <div data-i18n="Container">Permissions</div>
             </a>
           </li>
-          {{-- <li class="menu-item">
-            <a href="layouts-fluid.html" class="menu-link">
-              <div data-i18n="Fluid">Fluid</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="layouts-blank.html" class="menu-link">
-              <div data-i18n="Blank">Blank</div>
-            </a>
-          </li> --}}
         </ul>
       </li>
 
