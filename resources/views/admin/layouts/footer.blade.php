@@ -25,6 +25,7 @@
 
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
+
 <script src="{{asset('admin_assets/assets/vendor/libs/jquery/jquery.js')}}"></script>
 <script src="{{asset('admin_assets/assets/vendor/libs/popper/popper.js')}}"></script>
 <script src="{{asset('admin_assets/assets/vendor/js/bootstrap.js')}}"></script>
@@ -43,12 +44,19 @@
 <!-- Page JS -->
 <script src="{{asset('admin_assets/assets/js/dashboards-analytics.js')}}"></script>
 
+<script src="https://cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script>
+
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+<script>
+
+</script>
 <script>
     $(document).ready(function(){
         $('#myTable').DataTable({order: [[0, 'desc']]});
         $('.validate-form').validate();
+        CKEDITOR.replace( 'content' );
+      CKEDITOR.config.allowedContent = true;
     });
 </script>
 </body>
