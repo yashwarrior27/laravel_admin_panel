@@ -16,21 +16,23 @@
         <div class="card border-bottom {{explode(' ',$title)[2]=='Edit'?'border-warning':'border-success'}}">
             <div class="card-body">
                 <div class="row">
-                    <form class="validate-form" action="{{route('static_pages.store')}}" method="post">
+                    <form class="validate-form" action="{{route('email_templates.store')}}" method="post">
                         @csrf
                         <input type="hidden" name="id" value="{{$result->id ?? ''}}">
-                        @if (isset($result))
-                        <input type="hidden" name="title" value="{{$result->title ?? ''}}">
-                        @endif
                         <div class="mb-3">
                           <label for="title" class="form-label">Title</label>
-                          <input class="form-control"  type="text" id="title" name='title' placeholder="title" required value="{{old('title',$result->title??'')}}" @if (isset($result))
-                              disabled
-                          @endif>
+                          <input class="form-control"  type="text" id="title" name='title' placeholder="title" required value="{{old('title',$result->title??'')}}">
                           <span class="text-danger">@error('title')
                               {{$message}}
                           @enderror</span>
                         </div>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input class="form-control"  type="text" id="subject" name='subject' placeholder="subject" required value="{{old('subject',$result->subject??'')}}">
+                            <span class="text-danger">@error('subject')
+                                {{$message}}
+                            @enderror</span>
+                          </div>
                         <div class="mb-3">
                             <label for="content" class="form-label">Content</label>
                             <textarea    id="content" name='content'  placeholder="content" required>{{old('content',$result->content??'')}}</textarea>
@@ -48,7 +50,7 @@
                             </select>
                         </div>
                         <div class="mt-4">
-                            <a href="{{ route('static_pages.index') }}" class="btn btn-sm btn-danger">back</a>
+                            <a href="{{ route('email_templates.index') }}" class="btn btn-sm btn-danger">back</a>
                             <button type="submit" class="btn btn-sm btn-success">Submit</button>
                         </div>
                       </form>

@@ -21,14 +21,14 @@
                         <input type="hidden" name="id" value="{{$result->id ?? ''}}">
                         <div class="mb-3">
                           <label for="question" class="form-label">Question</label>
-                          <textarea class="form-control"  type="text" id="question" name='question' rows="2" placeholder="Question" required>{{$result->question??''}}</textarea>
+                          <textarea class="form-control"  type="text" id="question" name='question' rows="2" placeholder="Question" required>{{old('question',$result->question??'')}}</textarea>
                           <span class="text-danger">@error('question')
                               {{$message}}
                           @enderror</span>
                         </div>
                         <div class="mb-3">
                             <label for="answer" class="form-label">Answer</label>
-                            <textarea class="form-control"  type="text" id="answer" name='answer' rows="2" placeholder="Answer" required>{{$result->answer??''}}</textarea>
+                            <textarea class="form-control"  type="text" id="answer" name='answer' rows="2" placeholder="Answer" required>{{old('answer',$result->answer??'')}}</textarea>
                             <span class="text-danger">@error('answer')
                                 {{$message}}
                             @enderror</span>
