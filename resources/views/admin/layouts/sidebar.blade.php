@@ -76,13 +76,19 @@
       </li>
       <li class="menu-item  {{ request()->segment(1)=='faqs' ?'active': '' }}">
         <a href="{{route('faqs.index')}}" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-home-circle"></i>
+            <i class='menu-icon bx bx-highlight'></i>
           <div data-i18n="Analytics">Faqs</div>
+        </a>
+      </li>
+      <li class="menu-item  {{ request()->segment(1)=='static_pages' ?'active': '' }}">
+        <a href="{{route('static_pages.index')}}" class="menu-link">
+            <i class=' menu-icon bx bx-book-content'></i>
+          <div data-i18n="Analytics">Static Pages</div>
         </a>
       </li>
 
       <!-- Layouts -->
-      <li class="menu-item">
+      {{-- <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-layout"></i>
           <div data-i18n="Layouts">User Management</div>
@@ -105,7 +111,7 @@
             </a>
           </li>
         </ul>
-      </li>
+      </li> --}}
 
       {{-- <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Pages</span>
