@@ -87,6 +87,13 @@
         </a>
       </li>
 
+      <li class="menu-item  {{ request()->segment(1)=='email_templates' ?'active': '' }}">
+        <a href="{{route('email_templates.index')}}" class="menu-link">
+            <i class='menu-icon bx bx-envelope'></i>
+          <div data-i18n="Analytics">Email Templates</div>
+        </a>
+      </li>
+
       <!-- Layouts -->
       {{-- <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">

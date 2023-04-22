@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\StaticPageController;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,7 @@ Route::group(['middleware'=>'auth'],function () {
   Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
   Route::resource('/faqs',FaqController::class);
   Route::resource('/static_pages',StaticPageController::class);
+  Route::resource('/email_templates',EmailTemplateController::class);
 });
 
 Route::get('/clear-cache', function () {
