@@ -74,6 +74,12 @@
           <div data-i18n="Analytics">Dashboard</div>
         </a>
       </li>
+      <li class="menu-item  {{ request()->segment(1)=='class_categories' ?'active': '' }}">
+        <a href="{{route('class_categories.index')}}" class="menu-link">
+            <i class='menu-icon bx bx-category'></i>
+          <div data-i18n="Analytics">Class Categories</div>
+        </a>
+      </li>
       <li class="menu-item  {{ request()->segment(1)=='coupons' ?'active': '' }}">
         <a href="{{route('coupons.index')}}" class="menu-link">
             <i class='menu-icon bx bxs-coupon'></i>

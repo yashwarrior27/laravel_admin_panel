@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\StaticPageController;
+use App\Http\Controllers\Admin\ClassCategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,7 @@ Route::group(['middleware'=>'auth'],function () {
   Route::resource('/static_pages',StaticPageController::class);
   Route::resource('/email_templates',EmailTemplateController::class);
   Route::resource('/coupons',CouponController::class);
+  Route::resource('/class_categories',ClassCategoryController::class);
 });
 
 Route::get('/clear-cache', function () {
