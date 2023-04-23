@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Admin\FaqController;
@@ -29,6 +30,7 @@ Route::group(['middleware'=>'auth'],function () {
   Route::resource('/faqs',FaqController::class);
   Route::resource('/static_pages',StaticPageController::class);
   Route::resource('/email_templates',EmailTemplateController::class);
+  Route::resource('/coupons',CouponController::class);
 });
 
 Route::get('/clear-cache', function () {

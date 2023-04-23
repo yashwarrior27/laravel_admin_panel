@@ -56,6 +56,7 @@
         $('#myTable').DataTable({order: [[0, 'desc']]});
         $('.validate-form').validate();
         CKEDITOR.replace( 'content' );
+        CKEDITOR.replace( 'coupon_details' );
       CKEDITOR.config.allowedContent = true;
     });
 </script>
