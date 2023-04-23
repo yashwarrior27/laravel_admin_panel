@@ -74,6 +74,12 @@
           <div data-i18n="Analytics">Dashboard</div>
         </a>
       </li>
+      <li class="menu-item  {{ request()->segment(1)=='coupons' ?'active': '' }}">
+        <a href="{{route('coupons.index')}}" class="menu-link">
+            <i class='menu-icon bx bxs-coupon'></i>
+          <div data-i18n="Analytics">Coupon Manager</div>
+        </a>
+      </li>
       <li class="menu-item  {{ request()->segment(1)=='faqs' ?'active': '' }}">
         <a href="{{route('faqs.index')}}" class="menu-link">
             <i class='menu-icon bx bx-highlight'></i>
