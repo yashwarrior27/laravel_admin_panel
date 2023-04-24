@@ -111,6 +111,46 @@
           <div data-i18n="Analytics">Email Templates</div>
         </a>
       </li>
+      <li class="menu-item  {{ request()->segment(1)=='teachers' ?'active': '' }}">
+        <a href="#" class="menu-link">
+            <i class='menu-icon bx bxl-microsoft-teams' ></i>
+          <div data-i18n="Analytics">Teacher Manager</div>
+        </a>
+      </li>
+      <li class="menu-item  {{ request()->segment(1)=='plans' ?'active': '' }}">
+        <a href="#" class="menu-link">
+            <i class='menu-icon bx bx-paper-plane' ></i>
+          <div data-i18n="Analytics">Plans Manager</div>
+        </a>
+      </li>
+      <li class="menu-item  {{ request()->segment(1)=='assign_classes' ?'active': '' }}">
+        <a href="#" class="menu-link">
+            <i class='menu-icon bx bx-glasses'></i>
+          <div data-i18n="Analytics">Assign Class Manager</div>
+        </a>
+      </li>
+
+      <li class="menu-item  {{ request()->segment(1)=='exams' ?'active': '' }}">
+        <a href="#" class="menu-link">
+            <i class='menu-icon bx bx-test-tube'></i>
+          <div data-i18n="Analytics">Exam Manager</div>
+        </a>
+      </li>
+
+      <li class="menu-item  {{ request()->segment(1)=='results' ?'active': '' }}">
+        <a href="#" class="menu-link">
+            <i class='menu-icon bx bx-book-reader' ></i>
+          <div data-i18n="Analytics">Result Manager</div>
+        </a>
+      </li>
+
+      <li class="menu-item  {{ request()->segment(1)=='notifications' ?'active': '' }}">
+        <a href="#" class="menu-link">
+            <i class='menu-icon bx bx-notification'></i>
+          <div data-i18n="Analytics">Notification Manager</div>
+        </a>
+      </li>
+
 
       <!-- Layouts -->
       {{-- <li class="menu-item">
