@@ -80,6 +80,12 @@
           <div data-i18n="Analytics">Class Categories</div>
         </a>
       </li>
+      <li class="menu-item  {{ request()->segment(1)=='students' ?'active': '' }}">
+        <a href="{{route('students.index')}}" class="menu-link">
+            <i class='menu-icon bx bxs-graduation'></i>
+          <div data-i18n="Analytics">Student Manager</div>
+        </a>
+      </li>
       <li class="menu-item  {{ request()->segment(1)=='coupons' ?'active': '' }}">
         <a href="{{route('coupons.index')}}" class="menu-link">
             <i class='menu-icon bx bxs-coupon'></i>
