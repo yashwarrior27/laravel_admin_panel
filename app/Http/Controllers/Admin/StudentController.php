@@ -40,7 +40,7 @@ class StudentController extends Controller
             'phone'=>'required|numeric|digits_between:10,12|unique:students,phone,'.$request->id,
             'dob'=>'required|date',
             'gender'=>'required|in:male,female,other',
-            'password'=>'nullable',
+            'password'=>'nullable|min:8',
             'confirm_password'=>'required_with:password|same:password',
     ]);
 

@@ -70,7 +70,7 @@
                             <div class="col-6">
                                 <div class="mb-3">
                                <label for="password" class="form-label">Password</label>
-                               <input class="form-control"  type="password" id="password" name='password' placeholder="Password" required value="">
+                               <input class="form-control"  type="password" id="password" name='password' placeholder="Password" required value="" minlength="8">
                                <span class="text-danger">@error('password')
                                    {{$message}}
                                @enderror</span>
