@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('profile_image')->nullable();
             $table->unsignedBigInteger('class_id')->nullable();
             $table->unsignedBigInteger('school_id')->nullable();
-            $table->string('otp')->nullable();
+            $table->string('email_otp')->nullable();
             $table->boolean('status')->default(1);
             $table->text('fcm_token')->nullable();
             $table->timestamps();
