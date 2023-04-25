@@ -118,7 +118,7 @@
         </a>
       </li>
       <li class="menu-item  {{ request()->segment(1)=='plans' ?'active': '' }}">
-        <a href="#" class="menu-link">
+        <a href="{{route('plans.index')}}" class="menu-link">
             <i class='menu-icon bx bx-paper-plane' ></i>
           <div data-i18n="Analytics">Plans Manager</div>
         </a>
