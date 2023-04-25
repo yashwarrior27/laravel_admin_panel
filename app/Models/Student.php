@@ -24,7 +24,7 @@ class Student extends Model
         'profile_image',
         'class_id',
         'school_id',
-        'otp',
+        'email_otp',
         'status',
         'fcm_token'
     ];

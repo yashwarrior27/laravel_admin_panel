@@ -112,7 +112,7 @@
         </a>
       </li>
       <li class="menu-item  {{ request()->segment(1)=='teachers' ?'active': '' }}">
-        <a href="#" class="menu-link">
+        <a href="{{route('teachers.index')}}" class="menu-link">
             <i class='menu-icon bx bxl-microsoft-teams' ></i>
           <div data-i18n="Analytics">Teacher Manager</div>
         </a>
