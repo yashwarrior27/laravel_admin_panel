@@ -48,17 +48,16 @@
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
-<script>
-
-</script>
+@yield('script')
 <script>
     $(document).ready(function(){
-        $('#myTable').DataTable({order: [[0, 'desc']]});
         $('.validate-form').validate();
+        $('#myTable').DataTable({order: [[0, 'desc']]});
         CKEDITOR.replace( 'content' );
         CKEDITOR.replace( 'coupon_details' );
       CKEDITOR.config.allowedContent = true;
     });
 </script>
+
 </body>
 </html>

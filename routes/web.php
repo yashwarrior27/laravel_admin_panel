@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\StaticPageController;
 use App\Http\Controllers\Admin\ClassCategoryController;
 use App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Admin\SchoolManagementController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\TeacherController;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,7 @@ Route::group(['middleware'=>'auth'],function () {
   Route::resource('/students',StudentController::class);
   Route::resource('/teachers',TeacherController::class);
   Route::resource('/plans',PlanController::class);
+  Route::resource('/school_managements',SchoolManagementController::class);
 });
 
 Route::get('/clear-cache', function () {
