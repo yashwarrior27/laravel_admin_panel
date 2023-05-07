@@ -74,6 +74,18 @@
           <div data-i18n="Analytics">Dashboard</div>
         </a>
       </li>
+      <li class="menu-item  {{ request()->segment(1)=='school_managements' ?'active': '' }}">
+        <a href="{{route('school_managements.index')}}" class="menu-link">
+            <i class='menu-icon bx bxs-store-alt'></i>
+          <div data-i18n="Analytics">School Management</div>
+        </a>
+      </li>
+      <li class="menu-item  {{ request()->segment(1)=='addmissions' ?'active': '' }}">
+        <a href="{{route('addmissions.index')}}" class="menu-link">
+            <i class='menu-icon bx bxs-traffic'></i>
+          <div data-i18n="Analytics">Leads</div>
+        </a>
+      </li>
       <li class="menu-item  {{ request()->segment(1)=='class_categories' ?'active': '' }}">
         <a href="{{route('class_categories.index')}}" class="menu-link">
             <i class='menu-icon bx bx-category'></i>
