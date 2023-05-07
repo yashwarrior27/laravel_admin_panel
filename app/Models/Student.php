@@ -38,7 +38,7 @@ class Student extends Model
             'gender'=>$request->gender,
             'profile_image'=>empty($image)?$request->p_image:$image,
             'status'=>$request->status,
-            'unique_id'=>empty(!$request->unique)?$request->unique:explode('-',$request->dob)[0].substr($request->phone,0,5)
+            'unique_id'=>empty(!$request->unique)?$request->unique:explode('-',$request->dob)[0].substr($request->phone,0,5).rand(100,999),
         ];
         if(isset($request->password))
         $data['password']=Hash::make($request->password);

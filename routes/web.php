@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AddmissionController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EmailTemplateController;
@@ -41,6 +42,7 @@ Route::group(['middleware'=>'auth'],function () {
   Route::resource('/teachers',TeacherController::class);
   Route::resource('/plans',PlanController::class);
   Route::resource('/school_managements',SchoolManagementController::class);
+  Route::resource('/addmissions',AddmissionController::class);
 });
 
 Route::get('/clear-cache', function () {
