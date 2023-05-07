@@ -68,15 +68,103 @@
 
     <ul class="menu-inner py-1">
       <!-- Dashboard -->
-      <li class="menu-item active">
-        <a href="index.html" class="menu-link">
+      <li class="menu-item  {{ request()->segment(1)=='dashboard' ?'active': '' }}">
+        <a href="{{url("dashboard")}}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-home-circle"></i>
           <div data-i18n="Analytics">Dashboard</div>
         </a>
       </li>
+      <li class="menu-item  {{ request()->segment(1)=='school_managements' ?'active': '' }}">
+        <a href="{{route('school_managements.index')}}" class="menu-link">
+            <i class='menu-icon bx bxs-store-alt'></i>
+          <div data-i18n="Analytics">School Management</div>
+        </a>
+      </li>
+      <li class="menu-item  {{ request()->segment(1)=='addmissions' ?'active': '' }}">
+        <a href="{{route('addmissions.index')}}" class="menu-link">
+            <i class='menu-icon bx bxs-traffic'></i>
+          <div data-i18n="Analytics">Leads</div>
+        </a>
+      </li>
+      <li class="menu-item  {{ request()->segment(1)=='class_categories' ?'active': '' }}">
+        <a href="{{route('class_categories.index')}}" class="menu-link">
+            <i class='menu-icon bx bx-category'></i>
+          <div data-i18n="Analytics">Class Categories</div>
+        </a>
+      </li>
+      <li class="menu-item  {{ request()->segment(1)=='students' ?'active': '' }}">
+        <a href="{{route('students.index')}}" class="menu-link">
+            <i class='menu-icon bx bxs-graduation'></i>
+          <div data-i18n="Analytics">Student Manager</div>
+        </a>
+      </li>
+      <li class="menu-item  {{ request()->segment(1)=='coupons' ?'active': '' }}">
+        <a href="{{route('coupons.index')}}" class="menu-link">
+            <i class='menu-icon bx bxs-coupon'></i>
+          <div data-i18n="Analytics">Coupon Manager</div>
+        </a>
+      </li>
+      <li class="menu-item  {{ request()->segment(1)=='faqs' ?'active': '' }}">
+        <a href="{{route('faqs.index')}}" class="menu-link">
+            <i class='menu-icon bx bx-highlight'></i>
+          <div data-i18n="Analytics">Faqs</div>
+        </a>
+      </li>
+      <li class="menu-item  {{ request()->segment(1)=='static_pages' ?'active': '' }}">
+        <a href="{{route('static_pages.index')}}" class="menu-link">
+            <i class=' menu-icon bx bx-book-content'></i>
+          <div data-i18n="Analytics">Static Pages</div>
+        </a>
+      </li>
+
+      <li class="menu-item  {{ request()->segment(1)=='email_templates' ?'active': '' }}">
+        <a href="{{route('email_templates.index')}}" class="menu-link">
+            <i class='menu-icon bx bx-envelope'></i>
+          <div data-i18n="Analytics">Email Templates</div>
+        </a>
+      </li>
+      <li class="menu-item  {{ request()->segment(1)=='teachers' ?'active': '' }}">
+        <a href="{{route('teachers.index')}}" class="menu-link">
+            <i class='menu-icon bx bxl-microsoft-teams' ></i>
+          <div data-i18n="Analytics">Teacher Manager</div>
+        </a>
+      </li>
+      <li class="menu-item  {{ request()->segment(1)=='plans' ?'active': '' }}">
+        <a href="{{route('plans.index')}}" class="menu-link">
+            <i class='menu-icon bx bx-paper-plane' ></i>
+          <div data-i18n="Analytics">Plans Manager</div>
+        </a>
+      </li>
+      <li class="menu-item  {{ request()->segment(1)=='assign_classes' ?'active': '' }}">
+        <a href="#" class="menu-link">
+            <i class='menu-icon bx bx-glasses'></i>
+          <div data-i18n="Analytics">Assign Class Manager</div>
+        </a>
+      </li>
+
+      <li class="menu-item  {{ request()->segment(1)=='exams' ?'active': '' }}">
+        <a href="#" class="menu-link">
+            <i class='menu-icon bx bx-test-tube'></i>
+          <div data-i18n="Analytics">Exam Manager</div>
+        </a>
+      </li>
+
+      <li class="menu-item  {{ request()->segment(1)=='results' ?'active': '' }}">
+        <a href="#" class="menu-link">
+            <i class='menu-icon bx bx-book-reader' ></i>
+          <div data-i18n="Analytics">Result Manager</div>
+        </a>
+      </li>
+
+      <li class="menu-item  {{ request()->segment(1)=='notifications' ?'active': '' }}">
+        <a href="#" class="menu-link">
+            <i class='menu-icon bx bx-notification'></i>
+          <div data-i18n="Analytics">Notification Manager</div>
+        </a>
+      </li>
 
       <!-- Layouts -->
-      <li class="menu-item">
+      {{-- <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-layout"></i>
           <div data-i18n="Layouts">User Management</div>
@@ -98,18 +186,8 @@
               <div data-i18n="Container">Permissions</div>
             </a>
           </li>
-          {{-- <li class="menu-item">
-            <a href="layouts-fluid.html" class="menu-link">
-              <div data-i18n="Fluid">Fluid</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="layouts-blank.html" class="menu-link">
-              <div data-i18n="Blank">Blank</div>
-            </a>
-          </li> --}}
         </ul>
-      </li>
+      </li> --}}
 
       {{-- <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Pages</span>
