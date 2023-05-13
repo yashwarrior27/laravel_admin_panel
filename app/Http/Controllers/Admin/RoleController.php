@@ -3,20 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Plan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Role;
 
-class PlanController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-       $data=Plan::all();
-       $title='Plans List';
-       return view('admin.pages.plans.index',compact('data','title'));
+        $data=Role::all();
+        $title='Roles List';
+        return view('admin.pages.user_managements.roles.index',compact('data','title'));
+
     }
 
     /**
@@ -24,8 +25,8 @@ class PlanController extends Controller
      */
     public function create()
     {
-        $title='Plan Create';
-        return view('admin.pages.plans.create',compact('title'));
+        $title='Role Create';
+        return view('admin.pages.user_managements.roles.create',compact('title'));
     }
 
     /**
@@ -33,20 +34,17 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-              'name'=>'required|unique:plans,name,'.$request->id,
-        ]);
+        $request->validate(['title'=>'required|unique:roles,title,'.$request->id]);
 
         try
         {
-           DB::beginTransaction();
-           Plan::store($request);
+            DB::beginTransaction();
+           Role::store($request);
            DB::commit();
-           return redirect()->route('plans.index');
+           return redirect()->route('roles.index');
         }
         catch(\Exception $e)
         {
-            DB::rollback();
             return $e->getMessage();
         }
 
@@ -63,11 +61,12 @@ class PlanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Plan $plan)
+    public function edit(Role $role)
     {
-         $result=$plan;
-         $title='Plan Edit';
-       return view('admin.pages.plans.create',compact('result','title'));
+        $title='Role Edit';
+        $result=$role;
+        return view('admin.pages.user_managements.roles.create',compact('title','result'));
+
     }
 
     /**
@@ -81,9 +80,9 @@ class PlanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Plan $plan)
+    public function destroy(Role $role)
     {
-        $plan->delete();
-        return redirect()->back();
+       $role->delete();
+       return redirect()->route('roles.index');
     }
 }

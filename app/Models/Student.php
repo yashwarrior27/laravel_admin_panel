@@ -26,6 +26,7 @@ class Student extends Model
         'school_id',
         'email_otp',
         'status',
+        'previous_school_id',
         'fcm_token'
     ];
     public static function store(Request $request,$image=null){

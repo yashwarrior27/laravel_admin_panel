@@ -3,20 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Plan;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PlanController extends Controller
+class PermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-       $data=Plan::all();
-       $title='Plans List';
-       return view('admin.pages.plans.index',compact('data','title'));
+        $data=Permission::all();
+        $title='Permissions List';
+        return view('admin.pages.user_managements.permissions.index',compact('data','title'));
+
     }
 
     /**
@@ -24,8 +25,8 @@ class PlanController extends Controller
      */
     public function create()
     {
-        $title='Plan Create';
-        return view('admin.pages.plans.create',compact('title'));
+        $title='Permission Create';
+        return view('admin.pages.user_managements.permissions.create',compact('title'));
     }
 
     /**
@@ -33,20 +34,17 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-              'name'=>'required|unique:plans,name,'.$request->id,
-        ]);
+        $request->validate(['title'=>'required|unique:permissions,title,'.$request->id]);
 
         try
         {
-           DB::beginTransaction();
-           Plan::store($request);
+            DB::beginTransaction();
+           Permission::store($request);
            DB::commit();
-           return redirect()->route('plans.index');
+           return redirect()->route('permissions.index');
         }
         catch(\Exception $e)
         {
-            DB::rollback();
             return $e->getMessage();
         }
 
@@ -63,11 +61,12 @@ class PlanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Plan $plan)
+    public function edit(Permission $permission)
     {
-         $result=$plan;
-         $title='Plan Edit';
-       return view('admin.pages.plans.create',compact('result','title'));
+        $title='Permission Edit';
+        $result=$permission;
+        return view('admin.pages.user_managements.permissions.create',compact('title','result'));
+
     }
 
     /**
@@ -81,9 +80,9 @@ class PlanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Plan $plan)
+    public function destroy(Permission $permission)
     {
-        $plan->delete();
-        return redirect()->back();
+       $permission->delete();
+       return redirect()->route('permissions.index');
     }
 }

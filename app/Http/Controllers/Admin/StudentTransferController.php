@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Plan;
+use App\Models\StudentTransfer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PlanController extends Controller
+class StudentTransferController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-       $data=Plan::all();
-       $title='Plans List';
-       return view('admin.pages.plans.index',compact('data','title'));
+       $title='Transfer Students List';
+       $data=StudentTransfer::all();
+       return view('admin.pages.student_transfers.index',compact('title','data'));
     }
 
     /**
@@ -24,8 +24,8 @@ class PlanController extends Controller
      */
     public function create()
     {
-        $title='Plan Create';
-        return view('admin.pages.plans.create',compact('title'));
+        $title='Student Transfer Create';
+        return view('admin.pages.student_transfers.create',compact('title'));
     }
 
     /**
@@ -34,22 +34,22 @@ class PlanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-              'name'=>'required|unique:plans,name,'.$request->id,
-        ]);
+           'unique_id'=>'required|exists:students,unique_id'
+            ]);
 
-        try
-        {
-           DB::beginTransaction();
-           Plan::store($request);
-           DB::commit();
-           return redirect()->route('plans.index');
-        }
-        catch(\Exception $e)
-        {
-            DB::rollback();
-            return $e->getMessage();
-        }
+            try
+            {
+              DB::beginTransaction();
+               StudentTransfer::store($request);
+              DB::commit();
+              return redirect()->route('student_transfers.index');
 
+            }
+            catch(\Exception $e)
+            {
+                   DB::rollBack();
+               return $e->getMessage();
+            }
     }
 
     /**
@@ -63,11 +63,9 @@ class PlanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Plan $plan)
+    public function edit(string $id)
     {
-         $result=$plan;
-         $title='Plan Edit';
-       return view('admin.pages.plans.create',compact('result','title'));
+        //
     }
 
     /**
@@ -81,9 +79,8 @@ class PlanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Plan $plan)
+    public function destroy(string $id)
     {
-        $plan->delete();
-        return redirect()->back();
+        //
     }
 }
