@@ -5,7 +5,7 @@
         <script>
           document.write(new Date().getFullYear());
         </script>
-       yashwarrior27@
+       Vidhaalay
       </div>
     </div>
   </footer>

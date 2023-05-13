@@ -25,6 +25,7 @@ return new class extends Migration
             $table->unsignedBigInteger('school_id')->nullable();
             $table->string('email_otp')->nullable();
             $table->boolean('status')->default(1);
+            $table->integer('previous_school_id')->nullable();
             $table->text('fcm_token')->nullable();
             $table->timestamps();
         });

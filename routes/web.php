@@ -7,10 +7,14 @@ use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\StaticPageController;
 use App\Http\Controllers\Admin\ClassCategoryController;
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SchoolManagementController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\StudentTransferController;
 use App\Http\Controllers\Admin\TeacherController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +47,11 @@ Route::group(['middleware'=>'auth'],function () {
   Route::resource('/plans',PlanController::class);
   Route::resource('/school_managements',SchoolManagementController::class);
   Route::resource('/addmissions',AddmissionController::class);
+  Route::resource('/user_managements/roles',RoleController::class);
+  Route::resource('/user_managements/permissions',PermissionController::class);
+  Route::resource('/student_transfers',StudentTransferController::class);
+  Route::resource('/users',UserController::class);
+
 });
 
 Route::get('/clear-cache', function () {
