@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentTransfer extends Model
 {
@@ -23,12 +24,17 @@ class StudentTransfer extends Model
     public function student(){
         return $this->hasOne(Student::class,'id','student_id');
     }
-    public function school(){
+    public function fromSchool(){
         return $this->hasOne(SchoolManagement::class,'id','from_school_id');
+    }
+
+    public function toSchool(){
+        return $this->hasOne(SchoolManagement::class,'id','to_school_id');
     }
 
     public static function store(Request $request)
     {
+        $school_id=Auth::user()->school->id;
         $student=Student::where('unique_id',$request->unique_id)->first();
 
         return  static::updateOrCreate(
@@ -36,7 +42,7 @@ class StudentTransfer extends Model
             [
                'student_id'=>$student->id,
                'from_school_id'=>$student->school_id,
-                'to_school_id'=>2 //static
+                'to_school_id'=>$school_id //static
             ]
         );
     }

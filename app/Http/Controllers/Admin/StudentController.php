@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ClassCategory;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -14,7 +18,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-       $data=Student::all();
+       $school_id=Auth::user()->school->id;
+       $data=Student::where('school_id',$school_id)->get();
        $title='Students List';
        return view('admin.pages.students.index',compact('data','title'));
     }
@@ -26,7 +31,8 @@ class StudentController extends Controller
     {
 
         $title='Student Create';
-        return view('admin.pages.students.create',compact('title'));
+        $class=ClassCategory::where('status',1)->get();
+        return view('admin.pages.students.create',compact('title','class'));
     }
 
     /**
@@ -36,8 +42,8 @@ class StudentController extends Controller
     {
         $request->validate([
             'name'=>'required|string',
-            'email'=>'required|email|unique:students,email,'.$request->id,
-            'phone'=>'required|numeric|digits_between:10,12|unique:students,phone,'.$request->id,
+            'email'=>'required|email|unique:students,email,'.$request->id.',id,deleted_at,NULL|unique:users,email,'.$request->user_id.',id,deleted_at,NULL',
+            'phone'=>'required|numeric|digits_between:10,12|unique:students,phone,'.$request->id.',id,deleted_at,NULL|unique:users,mobile,'.$request->user_id.',id,deleted_at,NULL',
             'dob'=>'required|date',
             'gender'=>'required|in:male,female,other',
             'password'=>'nullable|min:8',
@@ -80,15 +86,35 @@ class StudentController extends Controller
     {
         $result=$student;
         $title='Student Edit';
-      return view('admin.pages.students.create',compact('result','title'));
+        $class=ClassCategory::where('status',1)->get();
+      return view('admin.pages.students.create',compact('result','title','class'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Student $student)
     {
-        //
+        $request->validate(
+            [
+                'newpassword'=>'required|min:8',
+                'confirm_password'=>'required_with:newpassword|same:newpassword',
+            ]
+            );
+         try
+         {
+            $student->password=Hash::make($request->newpassword);
+            $student->save();
+        User::where('id',$student->user_id)->update(['password'=>Hash::make($request->newpassword)]);
+
+        return redirect()->route('students.index')->with('change','Password Change Successfully');
+
+         }
+         catch(\Exception $e)
+         {
+            $e->getMessage();
+         }
+
     }
 
     /**
@@ -96,6 +122,8 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
+         $user=User::find($student->user_id);
+        $user->delete();
         $student->delete();
         return redirect()->back();
     }
