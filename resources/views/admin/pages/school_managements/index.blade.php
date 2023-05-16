@@ -1,6 +1,9 @@
 @extends('admin.layouts.main')
 @section('content')
 
+@php
+    $authcheck=Auth::user()->hasRole(1);
+@endphp
 <div class="row justify-content-center">
 
 <div class="col-10 ">
@@ -11,12 +14,37 @@
 
                 <h3 class="m-0">{{$title ?? 'title'}}</h3>
             </div>
+            @if ($authcheck)
             <div class="col-2">
                 <a href="{{route('school_managements.create')}}" class="btn btn-success">Create</a>
             </div>
+            @endif
         </div>
     </div>
  </div>
+</div>
+<div class="col-10 text-center">
+    <p class="text-danger">
+        @error('newpassword')
+        <p class="text-danger pt-2">
+            {{$message}} {!!"<button class='d-inline-block rounded btn btn-danger btn-sm p-0 'onclick='this.parentNode.remove()' ><i class='bx bx-x' ></i></button>"!!}
+               </p>
+        @enderror
+    </p>
+
+        @error('confirm_password')
+
+        <p class="text-danger pt-2">
+     {{$message}} {!!"<button class='d-inline-block rounded btn btn-danger btn-sm p-0 'onclick='this.parentNode.remove()' ><i class='bx bx-x' ></i></button>"!!}
+        </p>
+        @enderror
+
+        @if (Session::has('change'))
+            <p class="text-success pt-2">
+             {{Session::get('change')}} {!!"<button class='d-inline-block rounded btn btn-success btn-sm p-0 'onclick='this.parentNode.remove()' ><i class='bx bx-x' ></i></button>"!!}
+            </p>
+        @endif
+
 </div>
 <div class="col-12 mt-5">
     <div class="card border-bottom border-primary">
@@ -45,7 +73,10 @@
                         <td>{!!$item->status==1?'<span class="badge bg-success">Active</span>':'<span class="badge bg-danger">De-active</span>'!!}</td>
                         <td><div>
                             <a href="{{route('school_managements.edit',$item->id)}}" class="btn rounded-pill btn-sm btn-warning">Edit</a>
-                            <button class="btn rounded-pill btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete{{$item->id}}">Delete</a>
+                            @if ($authcheck)
+                            <button class="btn rounded-pill btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete{{$item->id}}">Delete</button>
+                            @endif
+                            <button class="btn rounded-pill btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#changePassword{{$item->id}}">Change Password</button>
                                 <!-- Modal -->
                         </div></td>
                       </tr>
@@ -70,6 +101,40 @@
                         </div>
                         </div>
                     </div>
+                    <div class="modal fade" id="changePassword{{$item->id}}" tabindex="-1" aria-labelledby="changePassword{{$item->id}}Label" aria-hidden="true">
+                        <div class="modal-dialog ">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <h4 class="m-2 px-2">Change Password</h4>
+                              <form  action="{{route('school_managements.update',$item->id)}}" method="post">
+                                @csrf
+                                @method('PATCH')
+                             <div class="row m-2">
+                                <div class="col-12">
+                                <div class="mb-3">
+                               <label for="password" class="form-label">New Password</label>
+                               <input class="form-control"  type="password" id="password" name='newpassword' placeholder="New Password" required value="" minlength="8">
+                                </div>
+                             </div>
+
+                                <div class="col-12">
+                               <div class="mb-3">
+                              <label for="confirm_password" class="form-label">Confirm Password</label>
+                              <input class="form-control"  type="password" id="confirm_password" name='confirm_password' placeholder="Confirm Password" minlength="8" required value="">
+                            </div>
+                        </div>
+                        </div>
+                            <div class="modal-footer border-bottom border-success">
+
+
+                                    <button type="submit"class='btn btn-success' >Change</button>
+                                   </form>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        </div>
                     @endforeach
                 @endif
                 </tbody>

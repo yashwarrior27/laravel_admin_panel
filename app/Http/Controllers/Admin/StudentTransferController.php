@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Student;
 use App\Models\StudentTransfer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class StudentTransferController extends Controller
@@ -14,8 +16,9 @@ class StudentTransferController extends Controller
      */
     public function index()
     {
+        $school_id=Auth::user()->school->id;
        $title='Transfer Students List';
-       $data=StudentTransfer::all();
+       $data=StudentTransfer::where('from_school_id',$school_id)->orWhere('to_school_id',$school_id)->get();
        return view('admin.pages.student_transfers.index',compact('title','data'));
     }
 
@@ -33,10 +36,11 @@ class StudentTransferController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-           'unique_id'=>'required|exists:students,unique_id'
-            ]);
+        $school_id=Auth::user()->school->id;
 
+        $request->validate([
+           'unique_id'=>'required|exists:students,unique_id,school_id,!'.$school_id
+            ]);
             try
             {
               DB::beginTransaction();
@@ -71,9 +75,35 @@ class StudentTransferController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,  StudentTransfer $studentTransfer)
     {
-        //
+        try
+        {
+            DB::beginTransaction();
+
+            $studentTransfer->status=$request->submit;
+            $studentTransfer->save();
+
+            if($request->submit=='success'){
+
+               $student = Student::findOrFail($studentTransfer->student_id);
+
+               $student->previous_school_id=$studentTransfer->from_school_id;
+               $student->school_id=$studentTransfer->to_school_id;
+               $student->save();
+
+            }
+            DB::commit();
+
+            return redirect()->route('student_transfers.index');
+
+        }
+        catch(\Exception $e)
+        {
+            DB::rollBack();
+            return $e->getMessage();
+        }
+
     }
 
     /**

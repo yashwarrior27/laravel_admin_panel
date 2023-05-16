@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ClassCategory;
 use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class TeacherController extends Controller
 {
@@ -14,7 +18,8 @@ class TeacherController extends Controller
      */
     public function index()
     {
-       $data=Teacher::all();
+        $school_id=Auth::user()->school->id;
+       $data=Teacher::where('school_id',$school_id)->get();
        $title='Teachers List';
        return view('admin.pages.teachers.index',compact('data','title'));
     }
@@ -26,7 +31,8 @@ class TeacherController extends Controller
     {
 
         $title='Teacher Create';
-        return view('admin.pages.teachers.create',compact('title'));
+        $class=ClassCategory::where('status',1)->get();
+        return view('admin.pages.teachers.create',compact('title','class'));
     }
 
     /**
@@ -36,8 +42,8 @@ class TeacherController extends Controller
     {
         $request->validate([
             'name'=>'required|string',
-            'email'=>'required|email|unique:teachers,email,'.$request->id,
-            'phone'=>'required|numeric|digits_between:10,12|unique:teachers,phone,'.$request->id,
+            'email'=>'required|email|unique:teachers,email,'.$request->id.',id,deleted_at,NULL|unique:users,email,'.$request->user_id.',id,deleted_at,NULL',
+            'phone'=>'required|numeric|digits_between:10,12|unique:teachers,phone,'.$request->id.',id,deleted_at,NULL|unique:users,mobile,'.$request->user_id.',id,deleted_at,NULL',
             'dob'=>'required|date',
             'gender'=>'required|in:male,female,other',
             'password'=>'nullable|min:8',
@@ -55,7 +61,6 @@ class TeacherController extends Controller
         Teacher::store($request,$image);
         DB::commit();
         return redirect()->route('teachers.index');
-
 
     }
     catch(\Exception $e)
@@ -80,15 +85,35 @@ class TeacherController extends Controller
     {
         $result=$teacher;
         $title='teacher Edit';
-      return view('admin.pages.teachers.create',compact('result','title'));
+        $class=ClassCategory::where('status',1)->get();
+      return view('admin.pages.teachers.create',compact('result','title','class'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,Teacher $teacher)
     {
-        //
+        $request->validate(
+            [
+                'newpassword'=>'required|min:8',
+                'confirm_password'=>'required_with:newpassword|same:newpassword',
+            ]
+            );
+         try
+         {
+            $teacher->password=Hash::make($request->newpassword);
+            $teacher->save();
+        User::where('id',$teacher->user_id)->update(['password'=>Hash::make($request->newpassword)]);
+
+        return redirect()->route('teachers.index')->with('change','Password Change Successfully');
+
+         }
+         catch(\Exception $e)
+         {
+            $e->getMessage();
+         }
+
     }
 
     /**
@@ -96,6 +121,8 @@ class TeacherController extends Controller
      */
     public function destroy(Teacher $teacher)
     {
+        $user=User::find($teacher->user_id);
+        $user->delete();
         $teacher->delete();
         return redirect()->back();
     }

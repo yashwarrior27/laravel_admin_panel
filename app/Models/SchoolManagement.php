@@ -6,16 +6,20 @@ use Helper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use PDO;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Hash;
 
 class SchoolManagement extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
 
     protected $table='school_management';
 
     protected $fillable=[
         'name',
+        'user_id',
+        'email',
+        'phone',
         'address',
         'open_time',
         'close_time',
@@ -111,8 +115,25 @@ class SchoolManagement extends Model
             }
         }
 
+        $UserData=[
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'mobile'=>$request->phone,
+            'user_type'=>'school'
+        ];
+        if(isset($request->password))
+        $UserData['password']=Hash::make($request->password);
+
+        $user=User::updateOrCreate(['id'=>$request->user_id],$UserData);
+
+        if(empty($request->user_id))
+        $user->roles()->sync(2);
+
         return  static::updateOrCreate(['id'=>$data['id']],[
         'name'=>$data['name'],
+        'email'=>$request->email,
+        'phone'=>$request->phone,
+        'user_id'=>$user->id,
         'address'=>$data['address'],
         'open_time'=>$data['open_time'],
         'close_time'=>$data['close_time'],
@@ -125,6 +146,10 @@ class SchoolManagement extends Model
         'status'=>$data['status']
       ]);
 
+    }
+
+    public function students(){
+        return $this->hasMany(Student::class,'school_id','id');
     }
 
 

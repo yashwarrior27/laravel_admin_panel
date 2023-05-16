@@ -21,6 +21,7 @@
                         <input type="hidden" name="id" value="{{$result->id ?? ''}}">
                         <input type="hidden" name="unique_id" value="{{$result->unique_id ?? ''}}">
                         <input type="hidden" name="p_image" value="{{$result->profile_image ?? ''}}">
+                        <input type="hidden" name="user_id" value="{{$result->user_id ?? ''}}">
                         <div class="mb-3">
                           <label for="name" class="form-label">Name</label>
                           <input class="form-control"  type="text" id="name" name='name' placeholder="Name" required value="{{old('name',$result->name??'')}}">
@@ -30,14 +31,20 @@
                         </div>
                           <div class="mb-3">
                           <label for="email" class="form-label">Email</label>
-                          <input class="form-control"  type="email" id="email" name='email' placeholder="Email" required value="{{old('email',$result->email??'')}}">
+                          @if (isset($result->email))
+                          <input type="text" class="form-control" disabled value="{{old('email',$result->email??'')}}" >
+                          @endif
+                          <input class="form-control"  type="{{isset($result->email)?'hidden':'email'}}" id="email" name='email' placeholder="Email" required value="{{old('email',$result->email??'')}}">
                           <span class="text-danger">@error('email')
                               {{$message}}
                           @enderror</span>
                         </div>
                         <div class="mb-3">
                             <label for="phone" class="form-label">Phone</label>
-                            <input class="form-control"  type="text" id="phone" name='phone' placeholder="Phone" required value="{{old('phone',$result->phone??'')}}" minlength="10" maxlength="12">
+                            @if (isset($result->phone))
+                            <input type="text" class="form-control" disabled value="{{old('phone',$result->phone??'')}}">
+                            @endif
+                            <input class="form-control"  type="{{isset($result->phone)?'hidden':'text'}}" id="phone" name='phone' placeholder="Phone" required value="{{old('phone',$result->phone??'')}}" minlength="10" maxlength="12" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
                             <span class="text-danger">@error('phone')
                                 {{$message}}
                             @enderror</span>
@@ -66,6 +73,7 @@
                                     </select>
                                 </div>
                             </div>
+
                             @if (!isset($result->password))
                             <div class="col-6">
                                 <div class="mb-3">
@@ -79,13 +87,28 @@
                            <div class="col-6">
                                <div class="mb-3">
                               <label for="confirm_password" class="form-label">Confirm Password</label>
-                              <input class="form-control"  type="password" id="confirm_password" name='confirm_password' placeholder="Confirm Password" required value="">
+                              <input class="form-control"  type="password" id="confirm_password" name='confirm_password' placeholder="Confirm Password"  minlength="8" required value="">
                               <span class="text-danger">@error('confirm_password')
                                   {{$message}}
                               @enderror</span>
                             </div>
                           </div>
                             @endif
+
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label>Assign Class</label>
+                                    <select name="class" class="form-select">
+                                        <option value="" disabled selected>Select Class</option>
+                                        @if (isset($class))
+
+                                        @foreach ($class as $key=>$value )
+                                            <option value="{{$value->id}}" {{isset($result) && $result->class_id==$value->id?'selected':''}}>{{$value->name}}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
 
                           </div>
 

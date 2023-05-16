@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Addmission;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,9 +15,11 @@ class AddmissionController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        $data=Addmission::all();
+        $school_id=Auth::user()->school->id;
+        $data=Addmission::where('applied_for_id',$school_id)->get();
         $title='Leads List';
         return view('admin.pages.addmissions.index',compact('data','title'));
     }
@@ -68,16 +71,7 @@ class AddmissionController extends Controller
             $addmission->status=1;
             $addmission->save();
 
-            Student::Create([
-                'name' =>!empty($addmission->student_info['name'])?$addmission->student_info['name']:$addmission->User->name,
-                'email'=>$addmission->User->email,
-                'phone'=>$addmission->User->phone,
-                'dob'=>date('Y-m-d',strtotime($addmission->student_info['dob'])),
-                'gender'=>strtolower($addmission->student_info['gender']),
-                'school_id'=>$addmission->applied_for_id,
-                'unique_id'=>explode('-',date('Y-m-d',strtotime($addmission->student_info['dob'])))[0].substr($addmission->User->phone,0,5).rand(100,999),
-                'password'=>Hash::make($addmission->User->phone.'@123'),
-            ]);
+            $addmission->ConvertLead($addmission);
 
             DB::commit();
 
