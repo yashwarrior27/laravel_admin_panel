@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2023 at 08:57 PM
+-- Generation Time: May 18, 2023 at 07:53 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -403,7 +403,7 @@ CREATE TABLE `school_management` (
 --
 
 INSERT INTO `school_management` (`id`, `name`, `user_id`, `email`, `phone`, `address`, `open_time`, `close_time`, `image`, `info`, `top_students`, `achievements`, `gallery`, `fee_structure`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(4, 'testingschool', 9, 'testingschool@gmail.com', '1234567899', 'test', '23:17:00', '23:17:00', '[\"http:\\/\\/127.0.0.1:8000\\/images\\/school_images\\/header_image\\/73032sucide.jpeg\"]', '{\"about_us\":\"test\",\"principal_detail\":\"test\",\"facilities\":[\"test\",\"test2\"],\"features\":[\"test1\",\"test2\"],\"principal_image\":\"http:\\/\\/127.0.0.1:8000\\/images\\/school_images\\/principal_image\\/73032sucide.jpeg\"}', '[{\"name\":\"test\",\"class\":\"X\",\"image\":\"http:\\/\\/127.0.0.1:8000\\/images\\/school_images\\/top_students\\/73032logo.jpeg\"}]', '[{\"name\":\"test\",\"year\":\"2000\",\"description\":\"test\",\"image\":\"http:\\/\\/127.0.0.1:8000\\/images\\/school_images\\/achievements\\/730323389152.png\"}]', '[{\"url\":\"http:\\/\\/127.0.0.1:8000\\/images\\/school_images\\/gallery\\/73032logo.jpeg\"},{\"url\":\"http:\\/\\/127.0.0.1:8000\\/images\\/school_images\\/gallery\\/732893389152.png\"}]', '[{\"title\":\"test\",\"content\":\"test\",\"registration\":\"13\",\"quarter1\":\"21\",\"quarter2\":\"21\",\"quarter3\":\"21\"}]', 1, '2023-05-15 12:20:33', '2023-05-15 12:24:49', NULL);
+(4, 'testingschool', 9, 'testingschool@gmail.com', '1234567899', 'test', '23:17:00', '23:17:00', '[\"http:\\/\\/127.0.0.1:8000\\/images\\/school_images\\/header_image\\/73032sucide.jpeg\"]', '{\"about_us\":\"test\",\"principal_detail\":\"test\",\"facilities\":[\"test\",\"test2\"],\"features\":[\"test1\",\"test2\"],\"principal_image\":\"http:\\/\\/127.0.0.1:8000\\/images\\/school_images\\/principal_image\\/73032sucide.jpeg\"}', '[{\"name\":\"test\",\"class\":\"X\",\"image\":\"http:\\/\\/127.0.0.1:8000\\/images\\/school_images\\/top_students\\/73032logo.jpeg\"}]', '[{\"name\":\"test\",\"year\":\"2000\",\"description\":\"test\",\"image\":\"http:\\/\\/127.0.0.1:8000\\/images\\/school_images\\/achievements\\/730323389152.png\"}]', '[{\"url\":\"http:\\/\\/127.0.0.1:8000\\/images\\/school_images\\/gallery\\/73032logo.jpeg\"},{\"url\":\"http:\\/\\/127.0.0.1:8000\\/images\\/school_images\\/gallery\\/732893389152.png\"}]', '[{\"title\":\"test\",\"content\":\"test\",\"registration\":\"13\",\"quarter1\":\"21\",\"quarter2\":\"21\",\"quarter3\":\"21\"}]', 1, '2023-05-15 12:20:33', '2023-05-18 12:16:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -520,9 +520,8 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`id`, `name`, `email`, `unique_id`, `phone`, `dob`, `gender`, `password`, `profile_image`, `class_id`, `school_id`, `user_id`, `email_otp`, `status`, `fcm_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Teacher', 'teacher@teacher.com', '202312345', '1234567890', '2023-04-24', 'female', '$2y$10$dnGNyz0Odip5SA0Yd2ZhN.sD5QpxyM8eUnNMTVSRD9m9bjJug8ix6', '44179toward-adventure-girl-relaxing-enjoying-road-trip.jpg', NULL, 4, NULL, NULL, 1, NULL, '2023-04-25 12:05:42', '2023-04-25 12:06:19', NULL),
 (2, 'test2', 'test2@gmail.com', '202312345327', '1234567898', '2023-05-14', 'female', '$2y$10$9XyV/xvwM03rfpkJ35n.W.Wl3XUYRDBJNKBUKPPMQNb/LQvTxhiaa', '56732logo.jpeg', 2, 4, 4, NULL, 1, NULL, '2023-05-14 04:02:12', '2023-05-14 04:24:21', '2023-05-14 04:24:21'),
-(3, 'test', 'test2@gmail.com', '202312345616', '1234567898', '2023-05-14', 'male', '$2y$10$E/o6zhDdQB4eAnGVG/aRoun1Qh5/OCHpnt0j3cdiMKD0jSS9ARQwO', '82200sucide.jpeg', 2, 4, 7, NULL, 1, NULL, '2023-05-14 11:02:57', '2023-05-14 11:06:40', NULL);
+(3, 'test', 'test2@gmail.com', '202312345616', '1234567898', '2023-05-14', 'male', '$2y$10$E/o6zhDdQB4eAnGVG/aRoun1Qh5/OCHpnt0j3cdiMKD0jSS9ARQwO', '82200sucide.jpeg', 2, 4, 7, NULL, 1, NULL, '2023-05-14 11:02:57', '2023-05-18 12:14:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -559,9 +558,9 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `email_verified_at`, `password`, `remember_token`, `unique_id`, `dob`, `gender`, `profile_image`, `user_type`, `so_google`, `email_otp`, `status`, `fcm_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'admin', 'admin@admin.com', '1234567890', NULL, '$2y$10$50NDue1ZwDaxJ3yrEMv2OeK1wcn9rN3UKMHxBuOxoRDJqv53FRb/C', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2023-04-20 19:12:37', '2023-04-20 19:12:37', NULL),
 (4, 'test2', 'test2@gmail.com', '1234567898', NULL, '$2y$10$9XyV/xvwM03rfpkJ35n.W.Wl3XUYRDBJNKBUKPPMQNb/LQvTxhiaa', NULL, '202312345327', '2023-05-14', 'female', '56732logo.jpeg', 'teacher', NULL, NULL, 1, NULL, '2023-05-14 04:02:12', '2023-05-14 04:24:21', '2023-05-14 04:24:21'),
-(7, 'test', 'test2@gmail.com', '1234567898', NULL, '$2y$10$E/o6zhDdQB4eAnGVG/aRoun1Qh5/OCHpnt0j3cdiMKD0jSS9ARQwO', NULL, '202312345616', '2023-05-14', 'male', '82200sucide.jpeg', 'teacher', NULL, NULL, 1, NULL, '2023-05-14 11:02:57', '2023-05-14 11:06:40', NULL),
+(7, 'test', 'test2@gmail.com', '1234567898', NULL, '$2y$10$E/o6zhDdQB4eAnGVG/aRoun1Qh5/OCHpnt0j3cdiMKD0jSS9ARQwO', NULL, '202312345616', '2023-05-14', 'male', '82200sucide.jpeg', 'teacher', NULL, NULL, 1, NULL, '2023-05-14 11:02:57', '2023-05-18 12:14:26', NULL),
 (8, 'testing', 'test21@gmail.com', '1234567892', NULL, '$2y$10$7Dx7veDVFxW8AycvJdqIWOjSsT98n26usfFzv3jiiXMnS4SVg2FMC', NULL, '202312345612', '2023-05-14', 'male', '83581logo.jpeg', 'student', NULL, NULL, 1, NULL, '2023-05-14 11:29:20', '2023-05-14 11:29:54', '2023-05-14 11:29:54'),
-(9, 'testingschool', 'testingschool@gmail.com', '1234567899', NULL, '$2y$10$90EaKyyIdCxeuOBra4u4s.HbHqZYemkI3bjdF6LqKBBK4M6Jo4yvq', NULL, NULL, NULL, NULL, NULL, 'school', NULL, NULL, 1, NULL, '2023-05-15 12:20:33', '2023-05-16 11:51:24', NULL);
+(9, 'testingschool', 'testingschool@gmail.com', '1234567899', NULL, '$2y$10$90EaKyyIdCxeuOBra4u4s.HbHqZYemkI3bjdF6LqKBBK4M6Jo4yvq', NULL, '2023153', '2023-05-18', 'male', '31490logo.jpeg', 'school', NULL, NULL, 1, NULL, '2023-05-15 12:20:33', '2023-05-18 12:16:22', NULL);
 
 --
 -- Indexes for dumped tables

@@ -16,11 +16,12 @@
         <div class="card border-bottom {{explode(' ',$title)[1]=='Edit'?'border-warning':'border-success'}}">
             <div class="card-body">
                 <div class="row">
-                    <form class="validate-form" action="{{route('students.store')}}" method="post" enctype="multipart/form-data">
+                    <form class="validate-form" action="{{route('users.store')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{$result->id ?? ''}}">
                         <input type="hidden" name="unique_id" value="{{$result->unique_id ?? ''}}">
                         <input type="hidden" name="p_image" value="{{$result->profile_image ?? ''}}">
+                        <input type="hidden" name="roles" value="{{$result->roles[0]?->id??''}}">
                         <div class="mb-3">
                           <label for="name" class="form-label">Name</label>
                           <input class="form-control"  type="text" id="name" name='name' placeholder="Name" required value="{{old('name',$result->name??'')}}">
@@ -28,25 +29,31 @@
                               {{$message}}
                           @enderror</span>
                         </div>
-                          <div class="mb-3">
-                          <label for="email" class="form-label">Email</label>
-                          <input class="form-control"  type="email" id="email" name='email' placeholder="Email" required value="{{old('email',$result->email??'')}}">
-                          <span class="text-danger">@error('email')
-                              {{$message}}
-                          @enderror</span>
-                        </div>
                         <div class="mb-3">
-                            <label for="phone" class="form-label">Phone</label>
-                            <input class="form-control"  type="text" id="phone" name='phone' placeholder="Phone" required value="{{old('phone',$result->phone??'')}}" minlength="10" maxlength="12">
-                            <span class="text-danger">@error('phone')
+                            <label for="email" class="form-label">Email</label>
+                            @if (isset($result->email))
+                            <input type="text" class="form-control" disabled value="{{old('email',$result->email??'')}}" >
+                            @endif
+                            <input class="form-control"  type="{{isset($result->email)?'hidden':'email'}}" id="email" name='email' placeholder="Email" required value="{{old('email',$result->email??'')}}">
+                            <span class="text-danger">@error('email')
                                 {{$message}}
                             @enderror</span>
                           </div>
+                          <div class="mb-3">
+                              <label for="mobile" class="form-label">Phone</label>
+                              @if (isset($result->mobile))
+                              <input type="text" class="form-control" disabled value="{{old('mobile',$result->mobile??'')}}">
+                              @endif
+                              <input class="form-control"  type="{{isset($result->mobile)?'hidden':'text'}}" id="mobile" name='mobile' placeholder="Phone" required value="{{old('mobile',$result->mobile??'')}}" minlength="10" maxlength="12" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+                              <span class="text-danger">@error('mobile')
+                                  {{$message}}
+                              @enderror</span>
+                            </div>
                           <div class="row">
                             <div class="col-6">
                                  <div class="mb-3">
                                 <label for="dob" class="form-label">Date Of Birth</label>
-                                <input class="form-control"  type="date" id="dob" name='dob' placeholder="Date Of Birth" required value="{{old('dob',$result->dob??'')}}">
+                                <input class="form-control"  type="date" id="dob" name='dob' placeholder="Date Of Birth" value="{{old('dob',$result->dob??'')}}">
                                 <span class="text-danger">@error('dob')
                                     {{$message}}
                                 @enderror</span>
@@ -55,7 +62,7 @@
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label>Gender</label>
-                                    <select name="gender" class="form-select" required>
+                                    <select name="gender" class="form-select" >
                                         <option value="" disabled selected>Select Gender</option>
                                         <option value="male" {{isset($result) && $result->gender=="male"?'selected':''}}> Male
                                         </option>
@@ -86,6 +93,23 @@
                             </div>
                           </div>
                             @endif
+
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label>Roles</label>
+                                    <select name="roles" class="form-select" required @if (isset($result))
+                                    disabled
+                                    @endif>
+                                        <option value="" disabled selected>Select Role</option>
+                                        @if (isset($roles))
+
+                                        @foreach ($roles as $key=>$value )
+                                            <option value="{{$value->id}}" {{isset($result) && $result->roles[0]->id==$value->id?'selected':''}}>{{$value->title}}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
 
                           </div>
 
@@ -118,7 +142,7 @@
                         </div>
 
                         <div class="mt-4">
-                            <a href="{{ route('students.index') }}" class="btn btn-sm btn-danger">back</a>
+                            <a href="{{ route('users.index') }}" class="btn btn-sm btn-danger">back</a>
                             <button type="submit" class="btn btn-sm btn-success">Submit</button>
                         </div>
                       </form>

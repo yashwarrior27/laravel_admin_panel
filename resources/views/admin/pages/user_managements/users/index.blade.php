@@ -12,7 +12,7 @@
                 <h3 class="m-0">{{$title ?? 'title'}}</h3>
             </div>
             <div class="col-2">
-                <a href="{{route('users.create')}}" class="btn btn-success">Create</a>
+                {{-- <a href="{{route('users.create')}}" class="btn btn-success">Create</a> --}}
             </div>
         </div>
     </div>
@@ -43,7 +43,7 @@
                         <td>{{$item->email??'-'}}</td>
                         <td>{{$item->mobile??'-'}}</td>
                         <td class="uppercase">{{$item->gender??'-'}}</td>
-                        <td>{{$item->roles->title??'-'}}</td>
+                        <td>{{implode(',',$item->roles->pluck('title')->toArray())??'-'}}</td>
                         <td>{!!$item->status==1?'<span class="badge bg-success">Active</span>':'<span class="badge bg-danger">De-active</span>'!!}</td>
                         <td><div>
                             <a href="{{route('users.edit',$item->id)}}" class="btn rounded-pill btn-sm btn-warning">Edit</a>
