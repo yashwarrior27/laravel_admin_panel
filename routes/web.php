@@ -49,8 +49,7 @@ Route::group(['middleware'=>'auth'],function () {
         Route::resource('/plans',PlanController::class);
         Route::resource('/user_managements/roles',RoleController::class);
         Route::resource('/user_managements/permissions',PermissionController::class);
-
-        Route::resource('/users',UserController::class);
+        Route::resource('/user_managements/users',UserController::class);
     });
 
     Route::resource('/school_managements',SchoolManagementController::class)->middleware('bothcheck');

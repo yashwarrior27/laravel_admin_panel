@@ -12,7 +12,7 @@
                 <h3 class="m-0">{{$title ?? 'title'}}</h3>
             </div>
             <div class="col-2">
-                <a href="{{route('roles.create')}}" class="btn btn-success">Create</a>
+                {{-- <a href="{{route('roles.create')}}" class="btn btn-success">Create</a> --}}
             </div>
         </div>
     </div>

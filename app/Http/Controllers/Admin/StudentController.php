@@ -65,7 +65,7 @@ class StudentController extends Controller
 
     }
     catch(\Exception $e)
-    {
+    {    DB::rollBack();
         return $e->getMessage();
     }
 

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\Request;
 
 class User extends Authenticatable
 {
@@ -64,6 +65,21 @@ class User extends Authenticatable
     }
     public function school(){
         return $this->hasOne(SchoolManagement::class,'user_id','id');
+    }
+
+    public static function store(Request $request,$image=null){
+
+
+        $data=[
+            'name'=>$request->name,
+            'dob'=>$request->dob,
+            'gender'=>$request->gender,
+            'profile_image'=>empty($image)?$request->p_image:$image,
+            'status'=>$request->status,
+            'unique_id'=>empty(!$request->unique)?$request->unique:explode('-',$request->dob)[0].substr($request->phone,0,5).rand(100,999),
+        ];
+
+      return User::updateOrCreate(['id'=>$request->id],$data);
     }
 
 }

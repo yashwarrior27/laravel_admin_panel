@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
+use App\Models\SchoolManagement;
+use App\Models\Student;
+use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -14,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data=User::all();
+        $data=User::where('id','>',1)->get();
         $title='Users List';
        return view('admin.pages.user_managements.users.index',compact('data','title'));
     }
@@ -25,7 +29,7 @@ class UserController extends Controller
     public function create()
     {
         $title='User Create';
-        $roles=Role::all();
+        $roles=Role::where('id','>',1)->get();
         return view('admin.pages.user_managements.users.create',compact('title','roles'));        //
     }
 
@@ -34,7 +38,30 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>'required|string',
+            'dob'=>'nullable|date',
+            'gender'=>'nullable|in:male,female,other',
+    ]);
+
+    try
+    {
+        DB::beginTransaction();
+
+        $image=null;
+        if(isset($request->profile_image))
+        $image= $this->uploadDocuments($request->profile_image,public_path('images/profile_images/'));
+
+       User::store($request,$image);
+        DB::commit();
+        return redirect()->route('users.index');
+    }
+    catch(\Exception $e)
+    {
+        DB::rollBack();
+        return $e->getMessage();
+    }
+
     }
 
     /**
@@ -48,9 +75,13 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        $result=$user;
+        $title='User Edit';
+        $roles=Role::where('id','>',1)->get();
+      return view('admin.pages.user_managements.users.create',compact('result','title','roles'));
+
     }
 
     /**
@@ -64,8 +95,18 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        if($user->roles[0]->id==4)
+           Student::where('user_id',$user->id)->delete();
+        if($user->roles[0]->id==3)
+           Teacher::where('user_id',$user->id)->delete();
+        if($user->roles[0]->id==2)
+          SchoolManagement::where('user_id',$user->id)->delete();
+
+        $user->delete();
+        $user->save();
+        return redirect()->back();
+
     }
 }
