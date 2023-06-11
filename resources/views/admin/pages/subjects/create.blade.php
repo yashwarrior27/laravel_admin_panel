@@ -16,7 +16,7 @@
         <div class="card border-bottom {{explode(' ',$title)[1]=='Edit'?'border-warning':'border-success'}}">
             <div class="card-body">
                 <div class="row">
-                    <form class="validate-form" action="{{route('plans.store')}}" method="post">
+                    <form class="validate-form" action="{{route('subjects.store')}}" method="post">
                         @csrf
                         <input type="hidden" name="id" value="{{$result->id ?? ''}}">
                         <div class="mb-3">
@@ -33,13 +33,6 @@
                                 {{$message}}
                             @enderror</span>
                           </div>
-                            <div class="mb-3">
-                                <label for="amount" class="form-label">Amount</label>
-                                <input class="form-control"  type="text" id="amount" name='amount' placeholder="Amount" required value="{{old('amount',$result->amount??'')}}" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
-                                <span class="text-danger">@error('amount')
-                                    {{$message}}
-                                @enderror</span>
-                              </div>
                           <div class="mb-3">
                             <label>Status</label>
                             <select name="status" class="form-select">
@@ -50,7 +43,7 @@
                             </select>
                         </div>
                         <div class="mt-4">
-                            <a href="{{ route('plans.index') }}" class="btn btn-sm btn-danger">back</a>
+                            <a href="{{ route('subjects.index') }}" class="btn btn-sm btn-danger">back</a>
                             <button type="submit" class="btn btn-sm btn-success">Submit</button>
                         </div>
 

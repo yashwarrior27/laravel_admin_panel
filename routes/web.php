@@ -14,8 +14,11 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SchoolManagementController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\StudentTransferController;
+use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\UserController;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,13 +53,14 @@ Route::group(['middleware'=>'auth'],function () {
         Route::resource('/user_managements/roles',RoleController::class);
         Route::resource('/user_managements/permissions',PermissionController::class);
         Route::resource('/user_managements/users',UserController::class);
+        Route::resource('/subjects',SubjectController::class);
     });
 
     Route::resource('/school_managements',SchoolManagementController::class)->middleware('bothcheck');
 
     Route::group(['middleware'=>'schoolcheck'],function(){
 
-        Route::resource('/student_transfers',StudentTransferController::class);
+     Route::resource('/student_transfers',StudentTransferController::class);
      Route::resource('/students',StudentController::class);
      Route::resource('/teachers',TeacherController::class);
      Route::resource('/addmissions',AddmissionController::class);

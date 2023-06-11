@@ -9,13 +9,26 @@
                        <h3 class="m-0">{{$title ?? 'title'}}</h3>
                    </div>
                    <div class="col-2">
-                    <form action="{{route('addmissions.update',$result->id)}}" class=" d-inline-block" method="post">
-                        @csrf
-                        @method('PATCH')
-                    <button class="btn rounded-pill btn-sm btn-primary d-inline-block" @if ($result->status==1)
-                        disabled
-                    @endif>Convert</button>
-                    </form>
+                    @if ($result->status==1)
+                            <button class="btn rounded-pill btn-sm btn-primary d-inline-block" disabled>Convert</button>
+                            @else
+                            <form action="{{route('addmissions.update',$result->id)}}" class=" d-inline-block" method="post">
+                                @csrf
+                                @method('PATCH')
+                            <script src="https://checkout.razorpay.com/v1/checkout.js"
+                            data-key="{{ env('RAZORPAY_KEY') }}"
+                            data-amount="{{env('Amount',100)}}00"
+                            data-buttontext="Convert"
+                            data-name="{{env('APP_NAME')}}"
+                            data-description="Razorpay payment"
+                            data-image="{{url('/images/logo.jpeg')}}"
+                            data-prefill.name="{{Auth::user()->name??'school'}}"
+                            data-prefill.email="{{Auth::user()->email ??'school@gmail.com'}}"
+                            data-theme.color="#91c846">
+                      </script>
+                            </form>
+                            @endif
+
                    </div>
                </div>
            </div>
@@ -211,7 +224,7 @@
              <h5 class="mt-5">Sibling's Information</h5>
              <div class="row justify-content-center">
                 @if (count($result->sibling_info)>0)
-                  @foreach ($result->sibling_info as $item=>$value)
+                  @foreach ($result->sibling_info as $result=>$value)
                   <div class="col-4 mt-3">
                     <label for="sibling_name" class="form-label">Name</label>
                     <input type="text" id="sibling_name" class="form-control" disabled value="{{$value['name']??''}}">
@@ -244,4 +257,9 @@
         </div>
        </div>
 </div>
+@endsection
+@section('script')
+<script>
+    $('.razorpay-payment-button').addClass('btn rounded-pill btn-sm btn-primary d-inline-block');
+</script>
 @endsection

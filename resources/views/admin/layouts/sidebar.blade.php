@@ -41,6 +41,13 @@
           <div data-i18n="Analytics">Class Categories</div>
         </a>
       </li>
+      <li class="menu-item  {{ request()->segment(1)=='subjects' ?'active': '' }}">
+        <a href="{{route('subjects.index')}}" class="menu-link">
+            <i class='bx bxs-category menu-icon' ></i>
+
+          <div data-i18n="Analytics">Subjects</div>
+        </a>
+      </li>
 
       <li class="menu-item  {{ request()->segment(1)=='plans' ?'active': '' }}">
         <a href="{{route('plans.index')}}" class="menu-link">

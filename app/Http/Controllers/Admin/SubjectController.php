@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Plan;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PlanController extends Controller
+class SubjectController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-       $data=Plan::all();
-       $title='Plans List';
-       return view('admin.pages.plans.index',compact('data','title'));
+       $data=Subject::all();
+       $title='Subjects List';
+       return view('admin.pages.subjects.index',compact('data','title'));
     }
 
     /**
@@ -24,8 +24,8 @@ class PlanController extends Controller
      */
     public function create()
     {
-        $title='Plan Create';
-        return view('admin.pages.plans.create',compact('title'));
+        $title='Subject Create';
+        return view('admin.pages.subjects.create',compact('title'));
     }
 
     /**
@@ -34,16 +34,15 @@ class PlanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-              'name'=>'required|unique:plans,name,'.$request->id,
-              'amount'=>'required|numeric'
+              'name'=>'required|unique:subjects,name,'.$request->id,
         ]);
 
         try
         {
            DB::beginTransaction();
-           Plan::store($request);
+            Subject::store($request);
            DB::commit();
-           return redirect()->route('plans.index');
+           return redirect()->route('subjects.index');
         }
         catch(\Exception $e)
         {
@@ -64,11 +63,11 @@ class PlanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Plan $plan)
+    public function edit(Subject $subject)
     {
-         $result=$plan;
-         $title='Plan Edit';
-       return view('admin.pages.plans.create',compact('result','title'));
+         $result=$subject;
+         $title='Subject Edit';
+       return view('admin.pages.subjects.create',compact('result','title'));
     }
 
     /**
@@ -82,9 +81,9 @@ class PlanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Plan $plan)
+    public function destroy(Subject $subject)
     {
-        $plan->delete();
+        $subject->delete();
         return redirect()->back();
     }
 }
