@@ -63,7 +63,7 @@ class Addmission extends Model
             'dob'=>date('Y-m-d',strtotime($addmission->student_info['dob'])),
             'gender'=>strtolower($addmission->student_info['gender']),
             'school_id'=>$addmission->applied_for_id,
-            'unique_id'=>explode('-',date('Y-m-d',strtotime($addmission->student_info['dob'])))[0].substr($addmission->User->phone,0,5).rand(100,999),
+            'unique_id'=>explode('-',date('Y-m-d',strtotime($addmission->student_info['dob'])))[0].substr($addmission->User->mobile,0,5).rand(100,999),
             'password'=>Hash::make($addmission->User->mobile.'@123'),
             'user_id'=>$addmission->user_id
         ]);

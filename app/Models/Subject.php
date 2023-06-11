@@ -1,17 +1,16 @@
 <?php
 
 namespace App\Models;
-use Illuminate\Http\Request;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
-class Plan extends Model
+class Subject extends Model
 {
     use HasFactory;
-    protected $table='plans';
-
-    protected $fillable=['name','description','amount','status'];
+    protected $table='subjects';
+    protected $fillable=['name','description','status'];
 
     public static function store(Request $request)
     {
@@ -20,8 +19,7 @@ class Plan extends Model
             ['id' => $request->id],
             [
                 'name' => $request->name,
-                'description'=>$request->description,
-                'amount'=>$request->amount
+                'description'=>$request->description
             ]
         );
     }

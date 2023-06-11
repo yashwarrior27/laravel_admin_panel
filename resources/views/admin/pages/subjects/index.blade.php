@@ -12,7 +12,7 @@
                 <h3 class="m-0">{{$title ?? 'title'}}</h3>
             </div>
             <div class="col-2">
-                <a href="{{route('plans.create')}}" class="btn btn-success">Create</a>
+                <a href="{{route('subjects.create')}}" class="btn btn-success">Create</a>
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
                   <tr>
                     <th scope="col">id</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Price (₹)</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Status</th>
                     <th scope="col">Actions</th>
                   </tr>
@@ -37,10 +37,10 @@
                     <tr>
                         <th scope="row">{{$item->id}}</th>
                         <td>{{$item->name??'-'}}</td>
-                        <td>{{$item->amount??'-'}}</td>
+                        <td>{{$item->description??'-'}}</td>
                         <td>{!!$item->status==1?'<span class="badge bg-success">Active</span>':'<span class="badge bg-danger">De-active</span>'!!}</td>
                         <td><div>
-                            <a href="{{route('plans.edit',$item->id)}}" class="btn rounded-pill btn-sm btn-warning">Edit</a>
+                            <a href="{{route('subjects.edit',$item->id)}}" class="btn rounded-pill btn-sm btn-warning">Edit</a>
                             <button class="btn rounded-pill btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete{{$item->id}}">Delete</a>
                                 <!-- Modal -->
                         </div></td>
@@ -56,7 +56,7 @@
                    <h1>Are you sure?</h1>
                             </div>
                             <div class="modal-footer border-bottom border-danger">
-                                <form action="{{route('plans.destroy',$item->id)}}" method="post">
+                                <form action="{{route('subjects.destroy',$item->id)}}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"class='btn btn-danger' >Delete</button>
